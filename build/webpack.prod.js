@@ -12,9 +12,22 @@ module.exports = webpackmerge.merge(webpackBaseConfig, {
         path: path.resolve(__dirname, '../lib'),
         publicPath: '/lib/',
         filename: 'index.js',
-        library: 'my-library',
+        library: 'hua-ui',
         libraryTarget: 'umd',
         umdNamedDefine: true
+    },
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            main: path.resolve(__dirname, '../src'),
+            packages: path.resolve(__dirname, '../packages'),
+            examples: path.resolve(__dirname, '../examples'),
+            'hua-ui': path.resolve(__dirname, '../')
+        },
+        modules: ['node_modules']
+    },
+    optimization: {
+        minimize: false
     },
     externals: {
         vue: {

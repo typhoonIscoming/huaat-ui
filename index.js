@@ -1,7 +1,9 @@
 import Button from './packages/button/index.js';
+import Link from './packages/link/index';
 
 const components = [
     Button,
+    Link,
 ]
 
 const install = function(Vue, options = {}) {
@@ -16,4 +18,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
     Button,
+    Link
 }
