@@ -6,7 +6,7 @@ const components = [
     Link,
 ]
 
-const install = function(Vue, options = {}) {
+const install = function (Vue, options = {}) {
     components.forEach(component => {
         Vue.component(component.name, component);
     });

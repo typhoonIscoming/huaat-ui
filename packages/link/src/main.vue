@@ -24,11 +24,11 @@
 
 <script>
 export default {
-    name: "HuaLink",
+    name: 'HuaLink',
     props: {
         type: {
             type: String,
-            default: "default"
+            default: 'default'
         },
         underline: {
             type: Boolean,
@@ -42,7 +42,7 @@ export default {
         handleClick(event) {
             if (!this.disabled) {
                 if (!this.href) {
-                    this.$emit("click", event);
+                    this.$emit('click', event);
                 }
             }
         }
