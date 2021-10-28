@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack --config build/webpack.prod.js",
+        "build:component": "webpack --config build/webpack.component.js",
         "catalogue": "tree -L 4 -I 'node_modules' > Catalogue.md",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
