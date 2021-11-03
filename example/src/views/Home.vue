@@ -1,9 +1,8 @@
 <template>
     <div class="home">
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
-        <HuaButton>
-            确认
-        </HuaButton>
+        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <HuaButton>确认</HuaButton>
+        <HuaLink>HuaLink</HuaLink>
     </div>
 </template>
 
@@ -12,9 +11,9 @@
 import HelloWorld from '@/components/HelloWorld.vue';
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
+    name: 'Home',
+    components: {
+        HelloWorld,
+    }
 };
 </script>

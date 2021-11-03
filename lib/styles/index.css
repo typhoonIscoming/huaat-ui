@@ -7,6 +7,8 @@
 /* c6e2ff */
 /* d9ecff */
 /* ecf5ff */
+/* button */
+/* link */
 /* BEM support Func
  -------------------------- */
 /* 53a8ff */
@@ -18,6 +20,8 @@
 /* c6e2ff */
 /* d9ecff */
 /* ecf5ff */
+/* button */
+/* link */
 /* Break-points
  -------------------------- */
 /* Scrollbar
@@ -539,4 +543,165 @@
 .hua-button-group .hua-button--info:not(:first-child):not(:last-child) {
   border-left-color: rgba(255, 255, 255, 0.5);
   border-right-color: rgba(255, 255, 255, 0.5);
+}
+
+/* BEM support Func
+ -------------------------- */
+/* 53a8ff */
+/* 66b1ff */
+/* 79bbff */
+/* 8cc5ff */
+/* a0cfff */
+/* b3d8ff */
+/* c6e2ff */
+/* d9ecff */
+/* ecf5ff */
+/* button */
+/* link */
+/* Break-points
+ -------------------------- */
+/* Scrollbar
+ -------------------------- */
+/* Placeholder
+ -------------------------- */
+/* BEM
+ -------------------------- */
+/* 53a8ff */
+/* 66b1ff */
+/* 79bbff */
+/* 8cc5ff */
+/* a0cfff */
+/* b3d8ff */
+/* c6e2ff */
+/* d9ecff */
+/* ecf5ff */
+/* button */
+/* link */
+.hua-link {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.hua-link.is-underline:hover:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  bottom: 0;
+  border-bottom: 1px solid #409EFF;
+}
+
+.hua-link.is-disabled {
+  cursor: not-allowed;
+}
+
+.hua-link [class*=el-icon-] + span {
+  margin-left: 5px;
+}
+.hua-link.el-link--default {
+  color: #606266;
+}
+.hua-link.el-link--default:hover {
+  color: #409EFF;
+}
+.hua-link.el-link--default:after {
+  border-color: #409EFF;
+}
+.hua-link.el-link--default.is-disabled {
+  color: #C0C4CC;
+}
+
+.hua-link.el-link--primary {
+  color: #409EFF;
+}
+.hua-link.el-link--primary:hover {
+  color: #66b1ff;
+}
+.hua-link.el-link--primary:after {
+  border-color: #409EFF;
+}
+.hua-link.el-link--primary.is-disabled {
+  color: #a0cfff;
+}
+
+.hua-link.el-link--primary.is-underline:hover:after {
+  border-color: #409EFF;
+}
+
+.hua-link.el-link--danger {
+  color: #F56C6C;
+}
+.hua-link.el-link--danger:hover {
+  color: #f78989;
+}
+.hua-link.el-link--danger:after {
+  border-color: #F56C6C;
+}
+.hua-link.el-link--danger.is-disabled {
+  color: #fab6b6;
+}
+
+.hua-link.el-link--danger.is-underline:hover:after {
+  border-color: #F56C6C;
+}
+
+.hua-link.el-link--success {
+  color: #67C23A;
+}
+.hua-link.el-link--success:hover {
+  color: #85ce61;
+}
+.hua-link.el-link--success:after {
+  border-color: #67C23A;
+}
+.hua-link.el-link--success.is-disabled {
+  color: #b3e19d;
+}
+
+.hua-link.el-link--success.is-underline:hover:after {
+  border-color: #67C23A;
+}
+
+.hua-link.el-link--warning {
+  color: #E6A23C;
+}
+.hua-link.el-link--warning:hover {
+  color: #ebb563;
+}
+.hua-link.el-link--warning:after {
+  border-color: #E6A23C;
+}
+.hua-link.el-link--warning.is-disabled {
+  color: #f3d19e;
+}
+
+.hua-link.el-link--warning.is-underline:hover:after {
+  border-color: #E6A23C;
+}
+
+.hua-link.el-link--info {
+  color: #909399;
+}
+.hua-link.el-link--info:hover {
+  color: #a6a9ad;
+}
+.hua-link.el-link--info:after {
+  border-color: #909399;
+}
+.hua-link.el-link--info.is-disabled {
+  color: #c8c9cc;
+}
+
+.hua-link.el-link--info.is-underline:hover:after {
+  border-color: #909399;
 }
