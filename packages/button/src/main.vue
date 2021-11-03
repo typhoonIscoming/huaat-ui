@@ -2,7 +2,7 @@
     <button
         :autofocus="autofocus"
         :class="[
-            type ? 'hua-button--' + type : '',
+            'hua-button--' + buttonType,
             buttonSize ? 'el-button--' + buttonSize : '',
             {
                 'is-disabled': disabled,
@@ -28,8 +28,16 @@ export default {
         autofocus: Boolean,
         round: Boolean,
         circle: Boolean,
+        size: String,
+        type: String,
     },
     computed: {
+        buttonSize() {
+            return ['medium','small', 'mini'].includes(this.size) ? this.size : 'medium';
+        },
+        buttonType() {
+            return 'primary/success/warning/danger/info/text'.split('/').includes(this.type) ? this.type : 'primary';
+        },
     },
     methods: {
         handleClick(evt) {

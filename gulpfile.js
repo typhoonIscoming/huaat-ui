@@ -7,7 +7,7 @@ const autoprefixer = require('autoprefixer');
 const components = require('./build/components.json');
 
 function buildCss(cb) {
-    gulp.src('./styles/index.scss')
+    gulp.src('./packages/theme-chalk/src/index.scss')
         .pipe(sass())
         .pipe(postcss([autoprefixer()]))
         .pipe(cleanCSS())
@@ -18,7 +18,7 @@ function buildCss(cb) {
 
 function buildSeperateCss(cb) {
     Object.keys(components).forEach(compName => {
-        gulp.src(`./styles/${compName}.scss`)
+        gulp.src(`./packages/theme-chalk/src/${compName}.scss`, { allowEmpty: true })
             .pipe(sass())
             .pipe(postcss([autoprefixer()]))
             .pipe(cleanCSS())
@@ -29,4 +29,4 @@ function buildSeperateCss(cb) {
     cb()
 }
 
-exports.default = gulp.series(buildCss);
+exports.default = gulp.series(buildCss, buildSeperateCss);

@@ -1,7 +1,10 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="home">
+        <HelloWorld msg="Welcome to Your Vue.js App"/>
+        <HuaButton>
+            确认
+        </HuaButton>
+    </div>
 </template>
 
 <script>

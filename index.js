@@ -6,7 +6,7 @@ const components = [
     Link,
 ]
 
-const install = function (Vue, options = {}) {
+export const install = function (Vue, options = {}) {
     components.forEach(component => {
         Vue.component(component.name, component);
     });
@@ -17,6 +17,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
+    version: '0.1.1',
     Button,
     Link
 }

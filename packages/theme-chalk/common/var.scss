@@ -1,0 +1,14 @@
+$--color-primary: #409EFF !default;
+$--color-white: #FFFFFF !default;
+$--color-black: #000000 !default;
+$--border-color-base: #DCDFE6 !default;
+
+
+
+$--button-hover-tint-percent: 20% !default;
+$--button-active-shade-percent: 10% !default; // rgba中a值
+
+
+$--button-default-background-color: $--color-white !default;
+$--button-default-border-color: $--border-color-base !default;
+

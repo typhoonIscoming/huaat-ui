@@ -1,8 +1,10 @@
 import Vue from 'vue';
-import HuaUi from 'hua-ui';
+import { install } from 'hua-ui';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+
+install(Vue)
 
 Vue.config.productionTip = false;
 
