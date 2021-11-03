@@ -10,7 +10,7 @@ function buildCss(cb) {
     gulp.src('./packages/theme-chalk/src/index.scss')
         .pipe(sass())
         .pipe(postcss([autoprefixer()]))
-        // .pipe(cleanCSS())
+        .pipe(cleanCSS())
         .pipe(rename('index.css'))
         .pipe(gulp.dest('./lib/styles'));
     cb()
@@ -21,7 +21,7 @@ function buildSeperateCss(cb) {
         gulp.src(`./packages/theme-chalk/src/${compName}.scss`, { allowEmpty: true })
             .pipe(sass())
             .pipe(postcss([autoprefixer()]))
-            // .pipe(cleanCSS())
+            .pipe(cleanCSS())
             .pipe(rename(`${compName}.css`))
             .pipe(gulp.dest('./lib/styles'));
     })
