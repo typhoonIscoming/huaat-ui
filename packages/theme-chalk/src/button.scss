@@ -1,8 +1,8 @@
 @charset "UTF-8";
-@import 'common/var';
-@import 'mixins/button';
-@import 'mixins/mixins';
-@import 'mixins/utils';
+@import '../common/var.scss';
+@import '../mixins/_button.scss';
+@import '../mixins/mixins.scss';
+@import '../mixins/utils.scss';
 
 @include b(button) {
     display: inline-block;
@@ -57,7 +57,7 @@
         border: 0;
     }
 
-    & [class*='el-icon-'] {
+    & [class*='hua-icon-'] {
         & + span {
             margin-left: 5px;
         }
@@ -69,6 +69,7 @@
             background: $--color-white;
             border-color: $--color-primary;
             color: $--color-primary;
+            font-size: 80px;
         }
 
         &:active {
@@ -111,7 +112,7 @@
             border-color: $--button-disabled-border-color;
         }
 
-        &.el-button--text {
+        &.hua-button--text {
             background-color: transparent;
         }
 
@@ -258,10 +259,10 @@
     display: inline-block;
     vertical-align: middle;
 
-    & > .el-button {
+    & > .hua-button {
         float: left;
         position: relative;
-        & + .el-button {
+        & + .hua-button {
             margin-left: 0;
         }
         &.is-disabled {
@@ -309,8 +310,8 @@
         }
     }
 
-    & > .el-dropdown {
-        & > .el-button {
+    & > .hua-dropdown {
+        & > .hua-button {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
             border-left-color: rgba($--color-white, 0.5);
@@ -318,7 +319,7 @@
     }
 
     @each $type in (primary, success, warning, danger, info) {
-        .el-button--#{$type} {
+        .hua-button--#{$type} {
             &:first-child {
                 border-right-color: rgba($--color-white, 0.5);
             }

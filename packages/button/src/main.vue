@@ -1,9 +1,10 @@
 <template>
     <button
+        class="hua-button"
         :autofocus="autofocus"
         :class="[
             'hua-button--' + buttonType,
-            buttonSize ? 'el-button--' + buttonSize : '',
+            buttonSize ? 'hua-button--' + buttonSize : '',
             {
                 'is-disabled': disabled,
                 'is-loading': loading,
