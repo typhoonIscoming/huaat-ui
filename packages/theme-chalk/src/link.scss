@@ -39,13 +39,13 @@ $typeMap: (
         cursor: not-allowed;
     }
 
-    & [class*='el-icon-'] {
+    & [class*='hua-icon-'] {
         & + span {
             margin-left: 5px;
         }
     }
 
-    &.el-link--default {
+    &.hua-link--default {
         color: $--link-default-font-color;
         &:hover {
             color: $--link-default-active-color;
@@ -59,7 +59,7 @@ $typeMap: (
     }
 
     @each $type, $primaryColor in $typeMap {
-        &.el-link--#{$type} {
+        &.hua-link--#{$type} {
             color: $primaryColor;
             &:hover {
                 color: mix($primaryColor, $--color-white, 80%);
