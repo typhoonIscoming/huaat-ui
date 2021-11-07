@@ -1,7 +1,7 @@
 <template>
     <div class="home">
-        <HuaButton>确认</HuaButton>
-        <HuaLink>HuaLink</HuaLink>
+        <HuaButton @click="handleClick">确认</HuaButton>
+        <HuaLink @click="handleLinkClick">HuaLink</HuaLink>
     </div>
 </template>
 
@@ -10,6 +10,14 @@
 export default {
     name: 'Home',
     components: {
-    }
+    },
+    methods: {
+        handleClick() {
+            console.log(123)
+        },
+        handleLinkClick() {
+            console.log(234)
+        },
+    },
 };
 </script>
