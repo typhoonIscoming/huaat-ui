@@ -1,9 +1,11 @@
-import Button from './packages/button/index.js';
+import Button from './packages/button/index';
 import Link from './packages/link/index';
+import Checkbox from './packages/checkbox/index';
 
 const components = [
     Button,
     Link,
+    Checkbox,
 ]
 
 const install = function (Vue, options = {}) {
@@ -21,4 +23,5 @@ export default {
     install,
     Button,
     Link,
+    Checkbox,
 }
