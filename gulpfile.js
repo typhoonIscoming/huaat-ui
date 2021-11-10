@@ -21,7 +21,7 @@ function buildSeperateCss(cb) {
         gulp.src(`./packages/theme-chalk/src/${compName}.scss`, { allowEmpty: true })
             .pipe(sass())
             .pipe(postcss([autoprefixer()]))
-            // .pipe(cleanCSS())
+            .pipe(cleanCSS())
             .pipe(rename(`${compName}.css`))
             .pipe(gulp.dest('./lib/styles'));
     })
