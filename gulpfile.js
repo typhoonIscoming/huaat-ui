@@ -10,7 +10,7 @@ function buildCss(cb) {
     gulp.src('./packages/theme-chalk/src/index.scss')
         .pipe(sass())
         .pipe(postcss([autoprefixer()]))
-        // .pipe(cleanCSS())
+        .pipe(cleanCSS())
         .pipe(rename('index.css'))
         .pipe(gulp.dest('./lib/styles'));
     cb()
