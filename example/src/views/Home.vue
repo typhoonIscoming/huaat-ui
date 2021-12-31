@@ -3,7 +3,10 @@
         <HuaButton @click="handleClick">确认</HuaButton>
         <HuaLink @click="handleLinkClick">HuaLink</HuaLink>
         <HuaCheckbox></HuaCheckbox>
-        <HuaCalendar />
+        <br />
+        <div class="calendarBox">
+            <HuaCalendar />
+        </div>
     </div>
 </template>
 
@@ -23,3 +26,9 @@ export default {
     },
 };
 </script>
+<style lang="scss" scoped>
+.calendarBox{
+    width: fit-content;
+    margin: 20px auto 0;
+}
+</style>
