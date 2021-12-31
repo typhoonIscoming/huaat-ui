@@ -5,7 +5,6 @@ import router from './router';
 import store from './store';
 import 'hua-ui/packages/theme-chalk/src/index.scss';
 
-// install(Vue)
 Vue.use(HuaUI)
 
 Vue.config.productionTip = false;
