@@ -24,6 +24,20 @@
                         <span class="hua-calendar-next-year-btn"></span>
                     </div>
                 </div>
+                <div class="hua-calendar-body">
+                    <table class="hua-calendar-table">
+                        <thead>
+                            <tr>
+                                <th
+                                    v-for="item in week"
+                                    :key="item"
+                                    class="hua-calendar-column-header">
+                                    <span class="hua-calendar-column-header-inner">{{ item }}</span>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="hua-calendar-footer"></div>
         </div>
@@ -31,15 +45,14 @@
 </template>
 
 <script>
-const zhMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月',];
-const enMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',];
+const zhMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+const enMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const enWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const zhWeek = ['日', '一', '二', '三', '四', '五', '六'];
+
 export default {
     name: 'HuaCalendar',
     props: {
-        textTop: {
-            type: Array,
-            default: () => ['日', '一', '二', '三', '四', '五', '六'],
-        },
         showDateInput: { // 是否显示顶部输入框
             type: Boolean,
             default: true,
@@ -47,6 +60,10 @@ export default {
         lang: {
             type: String,
             default: 'zh',
+        },
+        firstDayOfWeek: { // 一周第一天是周一，默认是周日
+            type: Boolean,
+            default: true,
         },
     },
     data() {
@@ -56,6 +73,20 @@ export default {
             year: '',
             today: '',
         }
+    },
+    computed: {
+        week() {
+            let temp = enWeek;
+            if (this.lang === 'zh') {
+                temp = zhWeek
+            }
+            if (this.firstDayOfWeek) {
+                const monday = temp[0];
+                temp = temp.slice(1)
+                temp.push(monday)
+            }
+            return temp
+        },
     },
     created() {
         this.initDate()

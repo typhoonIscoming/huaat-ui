@@ -12,6 +12,9 @@
     line-height: 1.5;
     box-sizing: border-box;
     box-shadow: 0 1px 5px #ccc;
+    table, td, th{
+        border: none;
+    }
 }
 .hua-calendar-panel{
     position: relative;
@@ -118,5 +121,19 @@
     }
 }
 
-
-
+/* 日期 */
+.hua-calendar-body{
+    padding: 10px 10px;
+    table{
+        border-collapse: collapse;
+        max-width: 100%;
+        background-color: transparent;
+        width: 100%;
+    }
+}
+.hua-calendar-column-header{
+    line-height: 18px;
+    padding: 6px 0;
+    width: 33px;
+    text-align: center;
+}
