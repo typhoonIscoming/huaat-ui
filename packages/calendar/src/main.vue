@@ -20,7 +20,7 @@
                             <span class="hua-calendar-month-select">{{ month }}</span>
                             <span class="hua-calendar-year-select">{{ year }}</span>
                         </span>
-                        <span class="hua-calendar-next-month-btn"></span>
+                        <span class="hua-calendar-next-month-btn" @click="nextMonth(myDate)"></span>
                         <span class="hua-calendar-next-year-btn"></span>
                     </div>
                 </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import tool from './utils';
 const zhMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
 const enMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const enWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -61,7 +62,7 @@ export default {
             type: String,
             default: 'zh',
         },
-        firstDayOfWeek: { // 一周第一天是周一，默认是周日
+        sundayStart: { // 一周第一天是周一，默认是周日
             type: Boolean,
             default: true,
         },
@@ -72,6 +73,7 @@ export default {
             month: '',
             year: '',
             today: '',
+            myDate: new Date(),
         }
     },
     computed: {
@@ -80,7 +82,7 @@ export default {
             if (this.lang === 'zh') {
                 temp = zhWeek
             }
-            if (this.firstDayOfWeek) {
+            if (this.sundayStart) {
                 const monday = temp[0];
                 temp = temp.slice(1)
                 temp.push(monday)
@@ -100,6 +102,15 @@ export default {
             }
             this.month = enMonth[date.getMonth()];
             this.year = date.getFullYear();
+        },
+        nextMonth(date) {
+            date = tool.dateFormat(date);
+            this.myDate = tool.getOtherMonth(this.myDate, 'nextMonth');
+            this.getList(this.myDate);
+        },
+        getList() { // 获取显示的月的日期列表
+            let arr = tool.getMonthList(this.myDate);
+            console.log('arr', arr)
         },
     },
 }
