@@ -15,7 +15,7 @@
                 <div class="hua-calendar-header">
                     <div style="position:relative;">
                         <span class="hua-calendar-prev-year-btn"></span>
-                        <span class="hua-calendar-prev-month-btn"></span>
+                        <span class="hua-calendar-prev-month-btn" @click="prevMonth(myDate)"></span>
                         <span class="hua-calendar-my-select">
                             <span class="hua-calendar-month-select">{{ month }}</span>
                             <span class="hua-calendar-year-select">{{ year }}</span>
@@ -36,6 +36,29 @@
                                 </th>
                             </tr>
                         </thead>
+                        <tbody class="hua-calendar-tbody">
+                            <tr
+                                v-for="row in rows"
+                                :key="row"
+                            >
+                                <td
+                                    v-for="index in 7"
+                                    :key="index"
+                                    class="hua-calendar-cell"
+                                >
+                                    <div
+                                        class="hua-calendar-date"
+                                        :class="{
+                                            prevMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'preMonth',
+                                            isToday: dayList[(row - 1) * 7 + index - 1].isToday,
+                                            nextMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'nextMonth',
+                                        }"
+                                    >
+                                        {{ dayList[(row - 1) * 7 + index - 1].id }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -74,6 +97,7 @@ export default {
             year: '',
             today: '',
             myDate: new Date(),
+            dayList: [],
         }
     },
     computed: {
@@ -89,9 +113,15 @@ export default {
             }
             return temp
         },
+        rows() {
+            const rows = this.dayList.length / 7;
+            console.log(rows)
+            return rows
+        },
     },
     created() {
-        this.initDate()
+        this.initDate();
+        this.getList(this.myDate);
     },
     methods: {
         initDate() {
@@ -108,9 +138,14 @@ export default {
             this.myDate = tool.getOtherMonth(this.myDate, 'nextMonth');
             this.getList(this.myDate);
         },
+        prevMonth(date) { // 上一个月
+            date = tool.dateFormat(date);
+            this.myDate = tool.getOtherMonth(this.myDate, 'preMonth');
+            this.getList(this.myDate);
+        },
         getList() { // 获取显示的月的日期列表
             let arr = tool.getMonthList(this.myDate);
-            console.log('arr', arr)
+            this.dayList = arr;
         },
     },
 }
