@@ -5,7 +5,7 @@
             <div class="hua-calendar-date-panel">
                 <div class="hua-calendar-input-wrap" v-if="showDateInput">
                     <div class="hua-calendar-date-input-wrap">
-                        <input class="hua-calendar-input" v-model="value">
+                        <input class="hua-calendar-input" v-model="inputValue">
                     </div>
                     <span class="hua-calendar-clear-btn"></span>
                 </div>
@@ -53,7 +53,9 @@
                                             isToday: dayList[(row - 1) * 7 + index - 1].isToday,
                                             nextMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'nextMonth',
                                             disabled: dayList[(row - 1) * 7 + index - 1].disabled,
+                                            selected: isSelected(dayList[(row - 1) * 7 + index - 1]),
                                         }"
+                                        @click="handleSelected(dayList[(row - 1) * 7 + index - 1])"
                                     >
                                         {{ dayList[(row - 1) * 7 + index - 1].id }}
                                     </div>
@@ -94,10 +96,18 @@ export default {
             type: Function,
             default: () => {},
         },
+        rangeCalendar: { // 是否是选择日期范围组件
+            type: Boolean,
+            default: true,
+        },
+        value: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
-            value: '',
+            inputValue: '',
             month: '',
             year: '',
             today: '',
@@ -154,6 +164,24 @@ export default {
                 }
                 return item
             });
+        },
+        isSelected(item) { // 是否选中
+            return +new Date(this.value) === +new Date(item.date);
+        },
+        handleSelected(item) {
+            // 点击选择
+            if (item.disabled) {
+                return
+            }
+            if (item.otherMonth === 'nowMonth' && !item.dayHide) {
+                this.getList(this.myDate, item.date);
+            }
+            if (item.otherMonth !== 'nowMonth') {
+                item.otherMonth === 'preMonth'
+                    ? this.prevMonth(item.date)
+                    : this.nextMonth(item.date);
+            }
+            this.$emit('input', item.date)
         },
     },
 }

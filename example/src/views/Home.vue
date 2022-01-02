@@ -5,7 +5,9 @@
         <HuaCheckbox></HuaCheckbox>
         <br />
         <div class="calendarBox">
-            <HuaCalendar :disabledDate="isDisabled" />
+            <HuaCalendar
+                v-model="start"
+                :disabledDate="isDisabled" />
         </div>
     </div>
 </template>
@@ -17,6 +19,7 @@ export default {
     data() {
         return {
             today: null,
+            start: '2022-1-1',
         }
     },
     created() {
@@ -32,7 +35,6 @@ export default {
             console.log(234)
         },
         isDisabled(date) {
-            console.log('date', date)
             const current = +new Date(date);
             return this.today < current
         },

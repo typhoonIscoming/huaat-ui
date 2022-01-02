@@ -164,4 +164,8 @@
         cursor: not-allowed;
         border-radius: 0;
     }
+    &.selected{
+        background: #3fc7fa;
+        color: #fff;
+    }
 }
