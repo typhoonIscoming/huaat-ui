@@ -5,7 +5,7 @@
         <HuaCheckbox></HuaCheckbox>
         <br />
         <div class="calendarBox">
-            <HuaCalendar />
+            <HuaCalendar :disabledDate="isDisabled" />
         </div>
     </div>
 </template>
@@ -14,7 +14,15 @@
 
 export default {
     name: 'Home',
-    components: {
+    data() {
+        return {
+            today: null,
+        }
+    },
+    created() {
+        const date = new Date();
+        const today = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        this.today = +new Date(today)
     },
     methods: {
         handleClick() {
@@ -22,6 +30,11 @@ export default {
         },
         handleLinkClick() {
             console.log(234)
+        },
+        isDisabled(date) {
+            console.log('date', date)
+            const current = +new Date(date);
+            return this.today < current
         },
     },
 };

@@ -52,6 +52,7 @@
                                             prevMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'preMonth',
                                             isToday: dayList[(row - 1) * 7 + index - 1].isToday,
                                             nextMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'nextMonth',
+                                            disabled: dayList[(row - 1) * 7 + index - 1].disabled,
                                         }"
                                     >
                                         {{ dayList[(row - 1) * 7 + index - 1].id }}
@@ -89,6 +90,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        disabledDate: {
+            type: Function,
+            default: () => {},
+        },
     },
     data() {
         return {
@@ -114,9 +119,7 @@ export default {
             return temp
         },
         rows() {
-            const rows = this.dayList.length / 7;
-            console.log(rows)
-            return rows
+            return this.dayList.length / 7;
         },
     },
     created() {
@@ -145,7 +148,12 @@ export default {
         },
         getList() { // 获取显示的月的日期列表
             let arr = tool.getMonthList(this.myDate);
-            this.dayList = arr;
+            this.dayList = arr.map(item => {
+                if (this.disabledDate && typeof this.disabledDate === 'function') {
+                    return { ...item, disabled: !!this.disabledDate(item.date) }
+                }
+                return item
+            });
         },
     },
 }

@@ -148,10 +148,20 @@
     background: transparent;
     line-height: 26px;
     text-align: center;
+    cursor: pointer;
     &.prevMonth, &.nextMonth{
         color: #bbb;
     }
     &.isToday{
         border: 1px solid #307ef2 !important;
+    }
+    &:hover{
+        background-color: #ebfaff;
+    }
+    &.disabled{
+        color: #c0ccda !important;
+        background: none !important;
+        cursor: not-allowed;
+        border-radius: 0;
     }
 }
