@@ -48,14 +48,11 @@
                                 >
                                     <div
                                         class="hua-calendar-date"
-                                        :class="{
-                                            prevMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'preMonth',
-                                            isToday: dayList[(row - 1) * 7 + index - 1].isToday,
-                                            nextMonth: dayList[(row - 1) * 7 + index - 1].otherMonth === 'nextMonth',
-                                            disabled: dayList[(row - 1) * 7 + index - 1].disabled,
-                                            selected: isSelected(dayList[(row - 1) * 7 + index - 1]),
-                                        }"
+                                        :class="[
+                                            ...parseClass(dayList[(row - 1) * 7 + index - 1]),
+                                        ]"
                                         @click="handleSelected(dayList[(row - 1) * 7 + index - 1])"
+                                        @mouseover="handleHover(dayList[(row - 1) * 7 + index - 1])"
                                     >
                                         {{ dayList[(row - 1) * 7 + index - 1].id }}
                                     </div>
@@ -165,6 +162,9 @@ export default {
                 return item
             });
         },
+        handleHover(item) {
+            console.log('===', item)
+        },
         isSelected(item) { // 是否选中
             return +new Date(this.value) === +new Date(item.date);
         },
@@ -182,6 +182,25 @@ export default {
                     : this.nextMonth(item.date);
             }
             this.$emit('input', item.date)
+        },
+        parseClass(item) { // 判断当前日期有哪些类
+            const classList = [];
+            const { otherMonth, isToday, disabled } = item;
+            if (otherMonth === 'preMonth') {
+                classList.push('prevMonth')
+            } else if (otherMonth === 'nextMonth') {
+                classList.push('nextMonth')
+            }
+            if (isToday) {
+                classList.push('isToday')
+            }
+            if (disabled) {
+                classList.push('disabled')
+            }
+            if (this.isSelected(item)) {
+                classList.push('selected')
+            }
+            return classList
         },
     },
 }
