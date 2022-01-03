@@ -142,7 +142,7 @@
     margin: 0 auto;
     color: #666;
     border-radius: 4px;
-    width: 26px;
+    // width: 26px;
     height: 26px;
     padding: 0;
     background: transparent;
@@ -167,5 +167,15 @@
     &.selected{
         background: #3fc7fa;
         color: #fff;
+    }
+    &.is-in-range{
+        background: rgba(85, 159, 240, 0.18);
+        border-radius: unset;
+        color: #475669;
+    }
+    &.hua-calendar-selected-start-date, &.hua-calendar-selected-end-date{
+        background: #007aff!important;
+        color: #fff!important;
+        border-radius: 4px!important;
     }
 }

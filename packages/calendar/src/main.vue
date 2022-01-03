@@ -113,6 +113,8 @@ export default {
             selectRangeIsDone: true, // 选择范围的操作是否完成
             rangeStartValue: '',
             rangeEndValue: '',
+            tempHoverEndValue: '',
+            dynamicClassList: [],
         }
     },
     computed: {
@@ -166,9 +168,11 @@ export default {
             });
         },
         handleHover(item) {
-            if (this.rangeCalendar) {
-                console.log('===', item)
+            const classList = [];
+            if (this.rangeCalendar && !this.selectRangeIsDone && !item.disabled) {
+                this.tempHoverEndValue = item.date;
             }
+            this.dynamicClassList = classList
         },
         isSelected(item) { // 是否选中
             return +new Date(this.value) === +new Date(item.date);
@@ -197,14 +201,13 @@ export default {
                 this.selectRangeIsDone = false;
                 // 如果日期范围的start没有值，则保存start值
                 this.rangeStartValue = item.date;
-            } else if (!this.rangeEndValue && !this.selectRangeIsDone) {
+                this.rangeEndValue = '';
+            } else {
                 this.rangeEndValue = item.date
                 this.selectRangeIsDone = true;
 
                 // 比较大小
-                const start = +new Date(this.rangeStartValue);
-                const end = +new Date(this.rangeEndValue);
-                if (start > end) {
+                if (this.isBigger(this.rangeStartValue, this.rangeEndValue)) {
                     [this.rangeStartValue, this.rangeEndValue] = [this.rangeEndValue, this.rangeStartValue]
                 }
                 this.$emit('onRange', { start: this.rangeStartValue, end: this.rangeEndValue })
@@ -227,7 +230,44 @@ export default {
             if (this.isSelected(item)) {
                 classList.push('selected')
             }
+            if (!this.selectRangeIsDone) { // 正在选择
+                if (this.isBigger(this.rangeStartValue, this.tempHoverEndValue)) {
+                    // start大于hover的当前日期
+                    if (
+                        this.isBigger(item.date, this.tempHoverEndValue)
+                        && this.isBigger(this.rangeStartValue, item.date)
+                    ) {
+                        classList.push('is-in-range')
+                    }
+                } else { // hover的日期大于start的日期
+                    if (
+                        this.isBigger(item.date, this.rangeStartValue)
+                        && this.isBigger(this.tempHoverEndValue, item.date)
+                    ) {
+                        classList.push('is-in-range')
+                    }
+                }
+            } else {
+                if (
+                    this.isBigger(item.date, this.rangeStartValue)
+                    && this.isBigger(this.rangeEndValue, item.date)
+                ) {
+                    classList.push('is-in-range')
+                }
+            }
+            if (this.isEqual(this.rangeStartValue, item.date)) {
+                classList.push('hua-calendar-selected-start-date')
+            }
+            if (this.isEqual(this.rangeEndValue, item.date)) {
+                classList.push('hua-calendar-selected-end-date')
+            }
             return classList
+        },
+        isBigger(first, second) {
+            return (+new Date(first)) > (+new Date(second))
+        },
+        isEqual(first, second) {
+            return (+new Date(first)) === (+new Date(second))
         },
     },
 }
