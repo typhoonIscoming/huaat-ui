@@ -7,7 +7,9 @@
         <div class="calendarBox">
             <HuaCalendar
                 v-model="start"
-                :disabledDate="isDisabled" />
+                :disabledDate="isDisabled"
+                @onRange="handleRange"
+            />
         </div>
     </div>
 </template>
@@ -37,6 +39,9 @@ export default {
         isDisabled(date) {
             const current = +new Date(date);
             return this.today < current
+        },
+        handleRange(data) {
+            console.log('range', data)
         },
     },
 };

@@ -51,7 +51,7 @@
                                         :class="[
                                             ...parseClass(dayList[(row - 1) * 7 + index - 1]),
                                         ]"
-                                        @click="handleSelected(dayList[(row - 1) * 7 + index - 1])"
+                                        @click="handleSelected(dayList[(row - 1) * 7 + index - 1], 'click')"
                                         @mouseover="handleHover(dayList[(row - 1) * 7 + index - 1])"
                                     >
                                         {{ dayList[(row - 1) * 7 + index - 1].id }}
@@ -110,6 +110,9 @@ export default {
             today: '',
             myDate: new Date(),
             dayList: [],
+            selectRangeIsDone: true, // 选择范围的操作是否完成
+            rangeStartValue: '',
+            rangeEndValue: '',
         }
     },
     computed: {
@@ -163,25 +166,49 @@ export default {
             });
         },
         handleHover(item) {
-            console.log('===', item)
+            if (this.rangeCalendar) {
+                console.log('===', item)
+            }
         },
         isSelected(item) { // 是否选中
             return +new Date(this.value) === +new Date(item.date);
         },
-        handleSelected(item) {
+        handleSelected(item, type) {
             // 点击选择
             if (item.disabled) {
                 return
             }
-            if (item.otherMonth === 'nowMonth' && !item.dayHide) {
-                this.getList(this.myDate, item.date);
+            if (!this.rangeCalendar) {
+                // 不是日期范围的操作，只是选中某个日期
+                if (item.otherMonth === 'nowMonth' && !item.dayHide) {
+                    this.getList(this.myDate, item.date);
+                }
+                if (item.otherMonth !== 'nowMonth') {
+                    item.otherMonth === 'preMonth'
+                        ? this.prevMonth(item.date)
+                        : this.nextMonth(item.date);
+                }
+                this.$emit('input', item.date)
+                return
             }
-            if (item.otherMonth !== 'nowMonth') {
-                item.otherMonth === 'preMonth'
-                    ? this.prevMonth(item.date)
-                    : this.nextMonth(item.date);
+            // 执行日期范围选择的操作
+            if (this.selectRangeIsDone) {
+                // 值为false表示正在选择
+                this.selectRangeIsDone = false;
+                // 如果日期范围的start没有值，则保存start值
+                this.rangeStartValue = item.date;
+            } else if (!this.rangeEndValue && !this.selectRangeIsDone) {
+                this.rangeEndValue = item.date
+                this.selectRangeIsDone = true;
+
+                // 比较大小
+                const start = +new Date(this.rangeStartValue);
+                const end = +new Date(this.rangeEndValue);
+                if (start > end) {
+                    [this.rangeStartValue, this.rangeEndValue] = [this.rangeEndValue, this.rangeStartValue]
+                }
+                this.$emit('onRange', { start: this.rangeStartValue, end: this.rangeEndValue })
             }
-            this.$emit('input', item.date)
         },
         parseClass(item) { // 判断当前日期有哪些类
             const classList = [];
