@@ -122,7 +122,7 @@ export default {
             if (this.lang === 'zh') {
                 temp = zhWeek
             }
-            if (this.sundayStart) {
+            if (!this.sundayStart) {
                 const monday = temp[0];
                 temp = temp.slice(1)
                 temp.push(monday)
@@ -133,9 +133,15 @@ export default {
             return this.dayList.length / 7;
         },
     },
-    created() {
-        this.initDate();
-        this.getList(this.myDate);
+    watch: {
+        sundayStart: {
+            immediate: true,
+            handler() {
+                tool.sundayStart = this.sundayStart;
+                this.initDate();
+                this.getList(this.myDate);
+            },
+        },
     },
     methods: {
         initDate(initDateStr = null) {

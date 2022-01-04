@@ -1,4 +1,5 @@
 export default {
+    sundayStart: true,
     getMonthweek(date) { // 向前空几个
         const year = new Date(date).getFullYear();
         const month = new Date(date).getMonth() + 1;

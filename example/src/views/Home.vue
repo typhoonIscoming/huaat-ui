@@ -5,8 +5,10 @@
         <HuaCheckbox></HuaCheckbox>
         <br />
         <div class="calendarBox">
+            <span @click="sundayStart = !sundayStart">切换显示</span>
             <HuaCalendar
                 v-model="start"
+                :sundayStart="sundayStart"
                 :disabledDate="isDisabled"
                 @onRange="handleRange"
             />
@@ -22,6 +24,7 @@ export default {
         return {
             today: null,
             start: '',
+            sundayStart: true,
         }
     },
     created() {
