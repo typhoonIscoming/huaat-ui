@@ -149,6 +149,7 @@
     line-height: 26px;
     text-align: center;
     cursor: pointer;
+    border: 1px solid transparent;
     &.prevMonth, &.nextMonth{
         color: #bbb;
     }

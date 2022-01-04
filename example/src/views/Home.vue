@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             today: null,
-            start: '2022-1-1',
+            start: '',
         }
     },
     created() {

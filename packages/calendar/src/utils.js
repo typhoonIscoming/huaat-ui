@@ -26,19 +26,23 @@ export default {
         const month = timeArray[1];
         const day = timeArray[2];
         let year2 = year;
-        let month2;
+        let month2 = month;
         if (str === 'nextMonth') {
             month2 = parseInt(month) + 1;
             if (month2 == 13) {
                 year2 = parseInt(year2) + 1;
                 month2 = 1;
             }
-        } else {
+        } else if (str === 'preMonth') {
             month2 = parseInt(month) - 1;
             if (month2 == 0) {
                 year2 = parseInt(year2) - 1;
                 month2 = 12;
             }
+        } else if (str === 'nextYear') {
+            year2 = parseInt(year2) + 1;
+        } else if (str === 'prevYear') {
+            year2 = parseInt(year2) - 1;
         }
         let day2 = day;
         const days2 = new Date(year2, month2, 0).getDate();

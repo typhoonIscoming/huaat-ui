@@ -7,21 +7,21 @@
                     <div class="hua-calendar-date-input-wrap">
                         <input class="hua-calendar-input" v-model="inputValue">
                     </div>
-                    <span class="hua-calendar-clear-btn"></span>
+                    <span class="hua-calendar-clear-btn" @click="handleClear"></span>
                 </div>
             </div>
             <!--日历日期部分-->
             <div class="hua-calendar-date-panel">
                 <div class="hua-calendar-header">
                     <div style="position:relative;">
-                        <span class="hua-calendar-prev-year-btn"></span>
+                        <span class="hua-calendar-prev-year-btn" @click="prevYear(myDate)"></span>
                         <span class="hua-calendar-prev-month-btn" @click="prevMonth(myDate)"></span>
                         <span class="hua-calendar-my-select">
                             <span class="hua-calendar-month-select">{{ month }}</span>
                             <span class="hua-calendar-year-select">{{ year }}</span>
                         </span>
                         <span class="hua-calendar-next-month-btn" @click="nextMonth(myDate)"></span>
-                        <span class="hua-calendar-next-year-btn"></span>
+                        <span class="hua-calendar-next-year-btn" @click="nextYear(myDate)"></span>
                     </div>
                 </div>
                 <div class="hua-calendar-body">
@@ -114,7 +114,6 @@ export default {
             rangeStartValue: '',
             rangeEndValue: '',
             tempHoverEndValue: '',
-            dynamicClassList: [],
         }
     },
     computed: {
@@ -139,8 +138,8 @@ export default {
         this.getList(this.myDate);
     },
     methods: {
-        initDate() {
-            const date = new Date();
+        initDate(initDateStr = null) {
+            const date = initDateStr ? new Date(initDateStr) : new Date();
             let month = zhMonth;
             if (this.lang === 'en') {
                 month = enMonth
@@ -151,11 +150,13 @@ export default {
         nextMonth(date) {
             date = tool.dateFormat(date);
             this.myDate = tool.getOtherMonth(this.myDate, 'nextMonth');
+            this.initDate(this.myDate)
             this.getList(this.myDate);
         },
         prevMonth(date) { // 上一个月
             date = tool.dateFormat(date);
             this.myDate = tool.getOtherMonth(this.myDate, 'preMonth');
+            this.initDate(this.myDate)
             this.getList(this.myDate);
         },
         getList() { // 获取显示的月的日期列表
@@ -168,11 +169,9 @@ export default {
             });
         },
         handleHover(item) {
-            const classList = [];
             if (this.rangeCalendar && !this.selectRangeIsDone && !item.disabled) {
                 this.tempHoverEndValue = item.date;
             }
-            this.dynamicClassList = classList
         },
         isSelected(item) { // 是否选中
             return +new Date(this.value) === +new Date(item.date);
@@ -268,6 +267,27 @@ export default {
         },
         isEqual(first, second) {
             return (+new Date(first)) === (+new Date(second))
+        },
+        prevYear(date) {
+            date = tool.dateFormat(date);
+            this.myDate = tool.getOtherMonth(date, 'prevYear');
+            this.initDate(this.myDate)
+            this.getList(this.myDate);
+        },
+        nextYear(date) {
+            date = tool.dateFormat(date);
+            this.myDate = tool.getOtherMonth(date, 'nextYear');
+            this.initDate(this.myDate)
+            this.getList(this.myDate);
+        },
+        handleClear() {
+            // 清除选中
+            this.inputValue = '';
+            this.initDate();
+            this.rangeStartValue = '';
+            this.rangeEndValue = '';
+            this.selectRangeIsDone = true;
+            this.tempHoverEndValue = '';
         },
     },
 }
