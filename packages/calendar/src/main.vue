@@ -207,6 +207,7 @@ export default {
                 // 如果日期范围的start没有值，则保存start值
                 this.rangeStartValue = item.date;
                 this.rangeEndValue = '';
+                this.tempHoverEndValue = '';
             } else {
                 this.rangeEndValue = item.date
                 this.selectRangeIsDone = true;
@@ -263,7 +264,9 @@ export default {
             if (this.isEqual(this.rangeStartValue, item.date)) {
                 classList.push('hua-calendar-selected-start-date')
             }
-            if (this.isEqual(this.rangeEndValue, item.date)) {
+            if (
+                this.isEqual(this.rangeEndValue, item.date)
+                || this.isEqual(this.tempHoverEndValue, item.date)) {
                 classList.push('hua-calendar-selected-end-date')
             }
             return classList
