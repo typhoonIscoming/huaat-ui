@@ -13,7 +13,7 @@
                 @onRange="handleRange"
             />
         </div>
-        <div class="calendarRange">
+        <div class="calendarRange calendarBox">
             <HuaCalendarRange />
         </div>
     </div>
