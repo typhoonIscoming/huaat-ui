@@ -13,6 +13,9 @@
                 @onRange="handleRange"
             />
         </div>
+        <div class="calendarRange">
+            <HuaCalendarRange />
+        </div>
     </div>
 </template>
 

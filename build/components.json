@@ -2,5 +2,6 @@
     "button": "packages/button/index.js",
     "link": "packages/link/index.js",
     "checkbox": "packages/checkbox/index.js",
-    "calendar": "packages/calendar/index.js"
+    "calendar": "packages/calendar/index.js",
+    "calendarRange": "packages/calendarRange/index.js"
 }
