@@ -95,11 +95,31 @@ export default {
         },
         rangeCalendar: { // 是否是选择日期范围组件
             type: Boolean,
-            default: true,
+            default: false,
         },
         value: {
             type: String,
             default: '',
+        },
+        start: {
+            type: String,
+            default: '',
+        },
+        end: {
+            type: String,
+            default: '',
+        },
+        isDone: {
+            type: Boolean,
+            default: true,
+        },
+        hoverValue: {
+            type: String,
+            default: '',
+        },
+        type: {
+            type: String,
+            default: 'current',
         },
     },
     data() {
@@ -110,10 +130,10 @@ export default {
             today: '',
             myDate: new Date(),
             dayList: [],
-            selectRangeIsDone: true, // 选择范围的操作是否完成
-            rangeStartValue: '',
-            rangeEndValue: '',
-            tempHoverEndValue: '',
+            // selectRangeIsDone: true, // 选择范围的操作是否完成
+            // rangeStartValue: '',
+            // rangeEndValue: '',
+            // tempHoverEndValue: '',
         }
     },
     computed: {
@@ -132,6 +152,38 @@ export default {
         rows() {
             return this.dayList.length / 7;
         },
+        rangeStartValue: {
+            get() {
+                return this.start
+            },
+            set(val) {
+                this.$emit('update:start', val)
+            },
+        },
+        rangeEndValue: {
+            get() {
+                return this.hoverValue
+            },
+            set(val) {
+                this.$emit('update:hoverValue', val)
+            },
+        },
+        selectRangeIsDone: {
+            get() {
+                return this.isDone
+            },
+            set(val) {
+                this.$emit('update:isDone', val)
+            },
+        },
+        tempHoverEndValue: {
+            get() {
+                return this.hoverValue
+            },
+            set(val) {
+                this.$emit('update:hoverValue', val)
+            },
+        },
     },
     watch: {
         sundayStart: {
@@ -139,7 +191,11 @@ export default {
             handler() {
                 tool.sundayStart = this.sundayStart;
                 this.initDate();
-                this.getList(this.myDate);
+                if (this.type === 'current') {
+                    this.getList(this.myDate);
+                } else {
+                    this.nextMonth(this.myDate)
+                }
             },
         },
     },
