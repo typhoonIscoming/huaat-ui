@@ -7,6 +7,7 @@
             :isDone.sync="isDone"
             :hoverValue.sync="hoverValue"
             type="current"
+            class="hua-start-date"
         />
         <Calendar
             :rangeCalendar="true"
@@ -15,6 +16,7 @@
             :isDone.sync="isDone"
             :hoverValue.sync="hoverValue"
             type="next"
+            class="hua-end-date"
         />
     </div>
 </template>

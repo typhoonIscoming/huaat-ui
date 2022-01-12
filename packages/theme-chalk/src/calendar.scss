@@ -156,7 +156,7 @@
     &.isToday{
         border: 1px solid #307ef2 !important;
     }
-    &:hover{
+    &:hover:not(.nextMonth){
         background-color: #ebfaff;
     }
     &.disabled{
@@ -169,12 +169,14 @@
         background: #3fc7fa;
         color: #fff;
     }
-    &.is-in-range{
+    &.is-in-range:not(.nextMonth){
         background: rgba(85, 159, 240, 0.18);
         border-radius: unset;
         color: #475669;
     }
-    &.hua-calendar-selected-start-date, &.hua-calendar-selected-end-date{
+    
+    &:not(.nextMonth).hua-calendar-selected-start-date,
+    &:not(.nextMonth).hua-calendar-selected-end-date{
         background: #007aff!important;
         color: #fff!important;
         border-radius: 4px!important;

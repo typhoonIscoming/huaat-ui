@@ -210,7 +210,7 @@ export default {
             if (this.lang === 'en') {
                 month = enMonth
             }
-            this.month = enMonth[date.getMonth()];
+            this.month = month[date.getMonth()];
             this.year = date.getFullYear();
         },
         nextMonth(date) {
