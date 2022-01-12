@@ -63,8 +63,8 @@ export default {
         date = typeof date === 'string' ? new Date(date.replace(/\-/g, '/')) : date;
         return `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()}`;
     },
-    getMonthList(date) { // 获取某月的列表 用于渲染
-        return [...this.getLeftArr(date), ...this.getMonthListNoOther(date), ...this.getRightArr(date)];
+    getMonthList(date, needSixRows) { // 获取某月的列表 用于渲染
+        return [...this.getLeftArr(date), ...this.getMonthListNoOther(date), ...this.getRightArr(date, needSixRows)];
     },
     // 获取某月的列表不包括上月和下月
     getMonthListNoOther(date) {
@@ -102,11 +102,16 @@ export default {
         }
         return arr;
     },
-    getRightArr(date) { // 下个月末尾的一些日期
+    getRightArr(date, needSixRows) { // 下个月末尾的一些日期
         const arr = [];
         const nextDate = this.getOtherMonth(date, 'nextMonth');
         const leftLength = this.getDaysInOneMonth(date) + this.getMonthweek(date);
-        const _length = 7 - leftLength % 7;
+        let _length = 7 - leftLength % 7;
+        if (leftLength + _length <= 35 && needSixRows) {
+            // 上月+本月总天数是否小于或等于35天
+            // ture->说明日历只有5行，则需要增加多一行下月的日期
+            _length += 7
+        }
         for (let i = 0; i < _length; i++) {
             const nowTime = `${nextDate.getFullYear()}/${(nextDate.getMonth() + 1)}/${(i + 1)}`;
             arr.push({

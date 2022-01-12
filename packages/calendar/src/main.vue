@@ -121,6 +121,10 @@ export default {
             type: String,
             default: 'current',
         },
+        sixRows: {
+            type: Boolean,
+            default: true,
+        },
     },
     data() {
         return {
@@ -222,7 +226,7 @@ export default {
             this.getList(this.myDate);
         },
         getList() { // 获取显示的月的日期列表
-            let arr = tool.getMonthList(this.myDate);
+            let arr = tool.getMonthList(this.myDate, this.sixRows);
             this.dayList = arr.map(item => {
                 if (this.disabledDate && typeof this.disabledDate === 'function') {
                     return { ...item, disabled: !!this.disabledDate(item.date) }
