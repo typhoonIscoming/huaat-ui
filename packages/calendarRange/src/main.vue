@@ -6,9 +6,11 @@
             :end.sync="end"
             :isDone.sync="isDone"
             :hoverValue.sync="hoverValue"
+            :nextButtonDisabled="prevButtonDisabled"
             type="current"
             class="hua-start-date"
             @onRange="handleOnRange"
+            @onCurrent="hanldeOnPrevDate"
         />
         <Calendar
             :rangeCalendar="true"
@@ -16,9 +18,11 @@
             :end.sync="end"
             :isDone.sync="isDone"
             :hoverValue.sync="hoverValue"
+            :prevButtonDisabled="nextButtonDisabled"
             type="next"
             class="hua-end-date"
             @onRange="handleOnRange"
+            @onCurrent="hanldeOnNextDate"
         />
     </div>
 </template>
@@ -47,6 +51,10 @@ export default {
             end: '',
             isDone: true,
             hoverValue: '',
+            nextButtonDisabled: false,
+            prevButtonDisabled: false,
+            prevDate: '',
+            nextDate: '',
         }
     },
     watch: {
@@ -65,6 +73,40 @@ export default {
     methods: {
         handleOnRange(range) {
             this.$emit('onRange', range)
+        },
+        hanldeOnNextDate(date) {
+            this.nextDate = date;
+            this.parseButtonClickable();
+        },
+        hanldeOnPrevDate(date) {
+            this.prevDate = date;
+            this.parseButtonClickable();
+        },
+        parseButtonClickable() {
+            if (this.prevDate && this.nextDate) {
+                const prev = new Date(this.prevDate);
+                const next = new Date(this.nextDate);
+                const prevYear = prev.getFullYear();
+                const prevMonth = prev.getMonth() + 1;
+                const nextYear = next.getFullYear();
+                const nextMonth = next.getMonth() + 1;
+
+                if (prevYear <= nextYear) {
+                    if (prevMonth + 1 >= nextMonth) {
+                        this.nextButtonDisabled = true;
+                        this.prevButtonDisabled = true;
+                    } else {
+                        this.nextButtonDisabled = false;
+                        this.prevButtonDisabled = false;
+                    }
+                } else {
+                    this.nextButtonDisabled = true;
+                    this.prevButtonDisabled = true;
+                }
+            } else {
+                this.nextButtonDisabled = false;
+                this.prevButtonDisabled = false;
+            }
         },
     },
 }

@@ -13,7 +13,7 @@
             />
         </div>
         <div class="calendarRange calendarBox">
-            <HuaCalendarRange @onRange="handleRange" />
+            <HuaCalendarRange v-model="rangeDate" @onRange="handleRange" />
         </div>
     </div>
 </template>
@@ -29,6 +29,7 @@ export default {
             sundayStart: true,
             a: 1,
             b: 2,
+            rangeDate: ['2022-03-10', '2022-03-27'],
         }
     },
     created() {
@@ -50,7 +51,8 @@ export default {
             return this.today < current
         },
         handleRange(data) {
-            console.log('range', data)
+            const { start, end } = data;
+            this.rangeDate = [start, end];
         },
     },
 };

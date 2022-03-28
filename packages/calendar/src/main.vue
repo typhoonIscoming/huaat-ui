@@ -14,14 +14,18 @@
             <div class="hua-calendar-date-panel">
                 <div class="hua-calendar-header">
                     <div style="position:relative;">
-                        <span class="hua-calendar-prev-year-btn" @click="prevYear(myDate)"></span>
-                        <span class="hua-calendar-prev-month-btn" @click="prevMonth(myDate)"></span>
+                        <template v-if="!prevButtonDisabled">
+                            <span class="hua-calendar-prev-year-btn" @click="prevYear(myDate)"></span>
+                            <span class="hua-calendar-prev-month-btn" @click="prevMonth(myDate)"></span>
+                        </template>
                         <span class="hua-calendar-my-select">
                             <span class="hua-calendar-month-select">{{ month }}</span>
                             <span class="hua-calendar-year-select">{{ year }}</span>
                         </span>
-                        <span class="hua-calendar-next-month-btn" @click="nextMonth(myDate)"></span>
-                        <span class="hua-calendar-next-year-btn" @click="nextYear(myDate)"></span>
+                        <template v-if="!nextButtonDisabled">
+                            <span class="hua-calendar-next-month-btn" @click="nextMonth(myDate)"></span>
+                            <span class="hua-calendar-next-year-btn" @click="nextYear(myDate)"></span>
+                        </template>
                     </div>
                 </div>
                 <div class="hua-calendar-body">
@@ -125,6 +129,14 @@ export default {
             type: Boolean,
             default: true,
         },
+        prevButtonDisabled: { // 上一月或上一年的按钮禁止
+            type: Boolean,
+            default: false,
+        },
+        nextButtonDisabled: { // 下一月或下一年的按钮禁止
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -196,6 +208,12 @@ export default {
                 } else {
                     this.nextMonth(this.myDate)
                 }
+            },
+        },
+        myDate: {
+            immediate: true,
+            handler(val) {
+                this.$emit('onCurrent', val)
             },
         },
     },
@@ -314,7 +332,7 @@ export default {
             } else {
                 if (
                     this.isBigger(item.date, this.rangeStartValue)
-                    && this.isBigger(this.rangeEndValue, item.date)
+                    && this.isBigger(this.end || this.rangeEndValue, item.date)
                 ) {
                     classList.push('is-in-range')
                 }
@@ -324,16 +342,49 @@ export default {
             }
             if (
                 this.isEqual(this.rangeEndValue, item.date)
-                || this.isEqual(this.tempHoverEndValue, item.date)) {
+                || this.isEqual(this.tempHoverEndValue, item.date)
+            ) {
                 classList.push('hua-calendar-selected-end-date')
             }
             return classList
         },
-        isBigger(first, second) {
-            return (+new Date(first)) > (+new Date(second))
+        isBigger(a, b) {
+            const first = new Date(a);
+            const second = new Date(b);
+            const firstYear = first.getFullYear();
+            const firstMonth = first.getMonth() + 1;
+            const firstDay = first.getDate();
+            const secondYear = second.getFullYear();
+            const secondMonth = second.getMonth() + 1;
+            const secondDay = second.getDate();
+
+            let flag = false;
+
+            if (
+                (firstYear > secondYear)
+                || (firstYear >= secondYear && firstMonth > secondMonth)
+                || (firstYear >= secondYear && firstMonth >= secondMonth && firstDay > secondDay)
+            ) {
+                flag = true;
+            }
+            return flag
         },
-        isEqual(first, second) {
-            return (+new Date(first)) === (+new Date(second))
+        isEqual(a, b) {
+            const first = new Date(a);
+            const second = new Date(b);
+            const firstYear = first.getFullYear();
+            const firstMonth = first.getMonth() + 1;
+            const firstDay = first.getDate();
+            const secondYear = second.getFullYear();
+            const secondMonth = second.getMonth() + 1;
+            const secondDay = second.getDate();
+
+            let flag = false;
+
+            if (firstYear === secondYear && firstMonth === secondMonth && firstDay === secondDay) {
+                flag = true;
+            }
+            return flag
         },
         prevYear(date) {
             date = tool.dateFormat(date);
