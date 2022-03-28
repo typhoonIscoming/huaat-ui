@@ -8,6 +8,7 @@
             :hoverValue.sync="hoverValue"
             type="current"
             class="hua-start-date"
+            @onRange="handleOnRange"
         />
         <Calendar
             :rangeCalendar="true"
@@ -17,6 +18,7 @@
             :hoverValue.sync="hoverValue"
             type="next"
             class="hua-end-date"
+            @onRange="handleOnRange"
         />
     </div>
 </template>
@@ -26,6 +28,16 @@ import Calendar from '../../calendar/src/main.vue';
 
 export default {
     name: 'HuaCalendarRange',
+    props: {
+        disabledDate: {
+            type: Function,
+            default: () => {},
+        },
+        value: {
+            type: Array,
+            default: () => [],
+        },
+    },
     components: {
         Calendar,
     },
@@ -36,6 +48,24 @@ export default {
             isDone: true,
             hoverValue: '',
         }
+    },
+    watch: {
+        value: {
+            immediate: true,
+            handler(val) {
+                try{
+                    this.start = val[0];
+                    this.end = val[1];
+                } catch(err) {
+                    console.log(err)
+                }
+            },
+        },
+    },
+    methods: {
+        handleOnRange(range) {
+            this.$emit('onRange', range)
+        },
     },
 }
 </script>

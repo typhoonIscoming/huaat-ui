@@ -10,11 +10,10 @@
                 v-model="start"
                 :sundayStart="sundayStart"
                 :disabledDate="isDisabled"
-                @onRange="handleRange"
             />
         </div>
         <div class="calendarRange calendarBox">
-            <HuaCalendarRange />
+            <HuaCalendarRange @onRange="handleRange" />
         </div>
     </div>
 </template>
@@ -28,12 +27,16 @@ export default {
             today: null,
             start: '',
             sundayStart: true,
+            a: 1,
+            b: 2,
         }
     },
     created() {
         const date = new Date();
         const today = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-        this.today = +new Date(today)
+        this.today = +new Date(today);
+        [this.a, this.b] = [this.b, this.a];
+        console.log(this.a, this.b)
     },
     methods: {
         handleClick() {

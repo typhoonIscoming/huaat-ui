@@ -79,7 +79,7 @@ export default {
     props: {
         showDateInput: { // 是否显示顶部输入框
             type: Boolean,
-            default: true,
+            default: false,
         },
         lang: {
             type: String,
@@ -134,10 +134,6 @@ export default {
             today: '',
             myDate: new Date(),
             dayList: [],
-            // selectRangeIsDone: true, // 选择范围的操作是否完成
-            // rangeStartValue: '',
-            // rangeEndValue: '',
-            // tempHoverEndValue: '',
         }
     },
     computed: {
@@ -172,7 +168,7 @@ export default {
                 this.$emit('update:hoverValue', val)
             },
         },
-        selectRangeIsDone: {
+        selectRangeIsDone: { // 选择范围的操作是否完成
             get() {
                 return this.isDone
             },
@@ -269,14 +265,16 @@ export default {
                 this.rangeEndValue = '';
                 this.tempHoverEndValue = '';
             } else {
-                this.rangeEndValue = item.date
+                let start = this.rangeStartValue;
+                let end = item.date;
                 this.selectRangeIsDone = true;
-
                 // 比较大小
-                if (this.isBigger(this.rangeStartValue, this.rangeEndValue)) {
-                    [this.rangeStartValue, this.rangeEndValue] = [this.rangeEndValue, this.rangeStartValue]
+                if (this.isBigger(start, end)) {
+                    [start, end] = [end, start];
                 }
-                this.$emit('onRange', { start: this.rangeStartValue, end: this.rangeEndValue })
+                this.rangeStartValue = start;
+                this.rangeEndValue = end;
+                this.$emit('onRange', { start, end })
             }
         },
         parseClass(item) { // 判断当前日期有哪些类
