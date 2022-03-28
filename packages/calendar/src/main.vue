@@ -174,10 +174,10 @@ export default {
         },
         rangeEndValue: {
             get() {
-                return this.hoverValue
+                return this.end
             },
             set(val) {
-                this.$emit('update:hoverValue', val)
+                this.$emit('update:end', val)
             },
         },
         selectRangeIsDone: { // 选择范围的操作是否完成
@@ -332,7 +332,7 @@ export default {
             } else {
                 if (
                     this.isBigger(item.date, this.rangeStartValue)
-                    && this.isBigger(this.end || this.rangeEndValue, item.date)
+                    && this.isBigger(this.end, item.date)
                 ) {
                     classList.push('is-in-range')
                 }

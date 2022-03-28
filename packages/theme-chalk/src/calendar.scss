@@ -156,29 +156,45 @@
     &.isToday{
         border: 1px solid #307ef2 !important;
     }
-    &:hover:not(.nextMonth){
+    &:hover{
         background-color: #ebfaff;
+        &.nextMonth, &.prevMonth{
+            background-color: initial;
+        }
     }
+    
     &.disabled{
-        color: #c0ccda !important;
-        background: none !important;
+        color: #c0ccda;
+        background: none;
         cursor: not-allowed;
         border-radius: 0;
     }
     &.selected{
-        background: #3fc7fa;
+        background: #007aff;
         color: #fff;
     }
-    &.is-in-range:not(.nextMonth){
+    &.is-in-range{
         background: rgba(85, 159, 240, 0.18);
         border-radius: unset;
         color: #475669;
+        &.nextMonth, &.prevMonth{
+            background: initial;
+            color: #bbb;
+        }
     }
-    
-    &:not(.nextMonth).hua-calendar-selected-start-date,
-    &:not(.nextMonth).hua-calendar-selected-end-date{
-        background: #007aff!important;
-        color: #fff!important;
-        border-radius: 4px!important;
+
+    &.hua-calendar-selected-start-date,
+    &.hua-calendar-selected-end-date{
+        background: #007aff;
+        color: #fff;
+        border-radius: 4px;
+        &.nextMonth{
+            background: initial;
+            color: #bbb;
+        }
+        &.prevMonth{
+            background: initial;
+            color: #bbb;
+        }
     }
 }
