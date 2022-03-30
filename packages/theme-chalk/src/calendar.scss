@@ -198,3 +198,32 @@
         }
     }
 }
+.hua-calendar-range{
+    display: inline-block;
+}
+.hua-date-container{
+    display: flex;
+}
+
+.date-range-picker-ranges-container{
+    display: inline-block;
+    width: 190px;
+    vertical-align: top;
+    margin: 0 10px;
+}
+.date-range-picker-ranges-link{
+    background-color: #f5f8fc;
+    cursor: pointer;
+    width: 85px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 3px;
+    margin: 5px;
+    display: inline-block;
+    color: #475669;
+    font-size: 14px;
+    &[name="special"]{
+        width: 180px;
+    }
+}
