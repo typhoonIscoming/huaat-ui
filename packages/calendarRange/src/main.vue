@@ -1,5 +1,8 @@
 <template>
     <div class="hua-date-container">
+        <div class="date-range-value-container">
+            date-range-value-container
+        </div>
         <div class="date-range-picker-ranges-container">
             <template v-for="item in quickSelectList">
                 <div
@@ -47,10 +50,7 @@ import Calendar from '../../calendar/src/main.vue';
 export default {
     name: 'HuaCalendarRange',
     props: {
-        disabledDate: {
-            type: Function,
-            default: () => {},
-        },
+        disabledDate: Function,
         value: {
             type: Array,
             default: () => [],
@@ -99,6 +99,13 @@ export default {
                 let [num, type] = item.value.match(/[a-z]+|[^a-z]+/gi);
                 num = Number(num);
                 const value = this.parseTime(num, type);
+                console.log('value', value)
+                if (value) {
+                    [this.start, this.end] = value;
+                }
+            } else {
+                this.start = '';
+                this.end = '';
             }
         },
         parseTime(num, type) {
@@ -113,6 +120,13 @@ export default {
                 let date = new Date(year, month, 1); 
                 return new Date(date.getTime() - 864e5).getDate(); 
             }
+            const getYYYYMMDD = (d) => {
+                const date = d ? new Date(d) : new Date();
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                return [year, month, day]
+            }
             if (type === 'year') {
                 // 本年|上年
                 if (num === 0) {
@@ -124,7 +138,7 @@ export default {
             } else if (type === 'month') {
                 // 本月|上月
                 if (num === 0) {
-                    return [`${year}-01-01`, `${year}-${month}-${day}`]
+                    return [`${year}-${month}-01`, `${year}-${month}-${day}`]
                 }
                 const selectMonth = month - num >= 1 ? month - num : month - num + 12;
                 const selectYear = month - num >= 1 ? year : year - 1;
@@ -132,24 +146,29 @@ export default {
                 return [`${selectYear}-${selectMonth}-01`, `${selectYear}-${selectMonth}-${selectDay}`]
             } else if (type === 'week') {
                 // 本周|上周
-                const lastMonthYear = month > 1 ? year : year - 1; // 上一个月是属于哪一年
-                const lastMonth = month > 1 ? month - 1 : 12;
-                const lastMonthDays = getDaysInMonth(lastMonthYear, lastMonth); // 上一个月多少天
-                const currentMonthDays = getDaysInMonth(year, month);
-                // if (num === 0) {
-                    // 本周
-                    // week取值是0-6;
-                    // 计算是从周一到周日
-                    const weeks = week * (num + 1);
-                    
-                    const diff = day - weeks + 1; // 从周一开始，所以+1
-                    const beyound = day + 7 - week > currentMonthDays; // 是否超出
-                    const mondayDate = diff > 0 ? diff : lastMonthDays + diff; // 周一的号数
-                    const sundayDate = beyound ? 7 - (currentMonthDays - day + week) : day + 7 - week;
-                    // const mondayMonth = diff > 0 ? 
-                // }
+                // 向前多少天的周一
+                const beforeMonday = num * 7 + week - 1;
+                const beforeSunday = num * 7 - (7 - week);
+                const today = +new Date(`${year}-${month}-${day}`);
+
+                const [mondayYear, mondayMonth, mondayDay ] = getYYYYMMDD(today - beforeMonday * 864e5);
+                const [sundayYear, sundayMonth, sundayDay ] = getYYYYMMDD(today - beforeSunday * 864e5);
+                return [`${mondayYear}-${mondayMonth}-${mondayDay}`, `${sundayYear}-${sundayMonth}-${sundayDay}`]
+            } else if (type === 'day') {
+                const today = +new Date(`${year}-${month}-${day}`);
+                const yesterday = getYYYYMMDD(today - 864e5);
+                if (num !== -1) {
+                    if (num === 0) { // 今天
+                        return [`${year}-${month}-${day}`, `${year}-${month}-${day}`]
+                    } else { // 昨天或指定过去多少天
+                        const start = getYYYYMMDD(today - num * 864e5);
+                        return [start.join('-'), yesterday.join('-')]
+                    }
+                } else {
+                    // 上线至今
+                    return ['2022-03-01', yesterday.join('-')]
+                }
             }
-            console.log('===', getDaysInMonth(year, month))
         },
         handleOnRange(range) {
             this.$emit('onRange', range)
@@ -171,7 +190,10 @@ export default {
                 const nextYear = next.getFullYear();
                 const nextMonth = next.getMonth() + 1;
 
-                if (prevYear <= nextYear) {
+                if (prevYear < nextYear) {
+                    this.nextButtonDisabled = false;
+                    this.prevButtonDisabled = false;
+                } else if (prevYear === nextYear) {
                     if (prevMonth + 1 >= nextMonth) {
                         this.nextButtonDisabled = true;
                         this.prevButtonDisabled = true;

@@ -202,9 +202,15 @@
     display: inline-block;
 }
 .hua-date-container{
-    display: flex;
+    // display: flex;
+    border: 1px solid #dcdcdc;
+    padding: 12px;
 }
-
+.date-range-value-container{
+    padding: 12px 18px;
+    border-bottom: 1px solid #EEEFF5;
+    margin-bottom: 12px;
+}
 .date-range-picker-ranges-container{
     display: inline-block;
     width: 190px;
